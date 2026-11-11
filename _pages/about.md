@@ -8,6 +8,7 @@ permalink: /
 _styles: >
   .post-header { display: none; }
   .home-grid { display: flex; gap: 2rem; align-items: flex-start; }
+  .home-header .post-description { font-size: 1.5rem; font-weight: 700; }
   .home-main { flex: 1 1 auto; min-width: 0; }
   .home-profile { flex: 0 0 30%; }
   .home-profile img { width: 100%; height: auto; }
