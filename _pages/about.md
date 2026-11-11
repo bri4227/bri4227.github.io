@@ -1,34 +1,44 @@
 ---
-layout: about
-title: about
+layout: page
+title: About # the navbar label is taken from this title; the visible heading is written in the body below
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Motto. Etc.
-
-profile:
-  align: right
-  image: prof_pic.jpg
-  image_circular: false # crops the image to make it circular
-  more_info: >
-    <p>555 your office number</p>
-    <p>123 your address street</p>
-    <p>Your City, State 12345</p>
-
-selected_papers: true # includes a list of papers marked as "selected={true}"
-social: true # includes social icons at the bottom of the page
-
-announcements:
-  enabled: true # includes a list of news items
-  scrollable: true # adds a vertical scroll bar if there are more than 3 news items
-  limit: 5 # leave blank to include all the news in the `_news` folder
-
-latest_posts:
-  enabled: true
-  scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
-  limit: 3 # leave blank to include all the blog posts
+# The `page` layout is used instead of `about` so that latest posts can sit beside the profile image
+# (the `about` layout wraps the body in a clearfix, which forces everything below the floated image).
+# Posts AND any page that has a `date:` in its front matter (e.g. a new SOP) are listed under "latest posts".
+_styles: >
+  .post-header { display: none; }
+  .home-grid { display: flex; gap: 2rem; align-items: flex-start; }
+  .home-main { flex: 1 1 auto; min-width: 0; }
+  .home-profile { flex: 0 0 30%; }
+  .home-profile img { width: 100%; height: auto; }
+  .home-profile .more-info { margin-top: 5px; font-family: monospace; }
+  .home-profile .more-info p { margin: 0; }
+  @media (max-width: 575px) { .home-grid { flex-direction: column-reverse; } .home-profile { flex-basis: auto; width: 100%; } }
 ---
 
-Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](https://www.reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
+{% assign dated_pages = site.pages | where_exp: "p", "p.date" %}
+{% assign recent_items = site.posts | concat: dated_pages | sort: "date" | reverse %}
 
-Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
-
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+<div class="home-header">
+<h1 class="post-title">Ken Lau Lab</h1>
+<p class="post-description"><strong>Softwares, Tutorials, and SOPs from the Lau Lab.</strong></p>
+</div>
+<div class="home-grid">
+<div class="home-main">
+<h2><a href="{{ '/blog/' | relative_url }}" style="color: inherit">latest posts</a></h2>
+<div class="news"><div class="table-responsive"><table class="table table-sm table-borderless">
+{% for item in recent_items limit: 3 %}
+<tr><th scope="row" style="width: 20%">{{ item.date | date: '%b %d, %Y' }}</th><td><a class="news-title" href="{{ item.url | relative_url }}">{{ item.title }}</a></td></tr>
+{% endfor %}
+</table></div></div>
+</div>
+<aside class="home-profile">
+<img class="img-fluid z-depth-1 rounded" src="{{ '/assets/img/laulab.png' | relative_url }}" alt="Lau Lab">
+<div class="more-info">
+<p>MRBIII 9271</p>
+<p>465 21st Ave S</p>
+<p>Nashville, TN 37232</p>
+<p>Lab Website: <a href="https://kenlaulab.org/">kenlaulab.org</a></p>
+</div>
+</aside>
+</div>
